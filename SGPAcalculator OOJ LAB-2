@@ -1,0 +1,100 @@
+//java program to create a class student and calculate the parameters
+
+import java.util.*;
+
+class student
+{
+    String usn;
+    String name;
+    int [] credits;
+    String [] sub;
+    int [] gradepoints;
+    double [] marks;
+    double SGPA;
+    double sum=0.0;
+    int sum2=0;
+    int i;
+    int k;
+
+        public student()
+        {
+            usn = new String();
+            name = new String();
+            credits = new int[8];
+            sub = new String[8];
+            gradepoints = new int[8];
+            marks = new double[8];
+        }
+
+        public void getDetails()
+        {
+            System.out.println("THE STUDENT DETAILS ARE:");
+            System.out.println("NAME: "+name);
+            System.out.println("USN: "+usn+"\n");
+            System.out.println("Subject Name\tCredits");
+            for(i=0;i<8;i++)
+                System.out.println(sub[i]+"\t"+credits[i]);
+            System.out.println("SGPA OF "+name+" IS "+SGPA);
+        }
+
+        public void calculator()
+        {
+            for(k=0;k<8;k++)
+            {
+                sum2=(sum2)+(credits[k]);
+                sum = sum+((credits[k])*gradepoints[k]);
+                SGPA = sum/(sum2);
+            }
+        }
+    }
+
+    public class StudentDetails
+    {
+        public static void main(String[] args)
+        {
+            student ujwal = new student();
+            Scanner sc = new Scanner(System.in);
+
+            int j;
+            ujwal.sub[0]="COA";//3
+            ujwal.sub[1]="OOJ";//3
+            ujwal.sub[2]="MATH";//4
+            ujwal.sub[3]="LD";//2
+            ujwal.sub[4]="DBMS";//4
+            ujwal.sub[5]="CIP";//1
+            ujwal.sub[6]="EVS";//1
+            ujwal.sub[7]="DST";//4
+            System.out.println("Enter USN,name of the student");
+            ujwal.usn = sc.nextLine();
+            ujwal.name = sc.nextLine();
+            System.out.println("Enter name,credits and grade points of all subjects");
+            for(j=0;j<8;j++)
+            {
+                System.out.println("Enter credits of"+(ujwal.sub[j]));
+                ujwal.credits[j]=sc.nextInt();
+                System.out.println("Enter marks of "+(ujwal.sub[j]));
+                ujwal.marks[j]=sc.nextDouble();
+
+                if(ujwal.marks[j]>=90.0)
+                    ujwal.gradepoints[j]=10;
+                else if(ujwal.marks[j]>=80.0)
+                    ujwal.gradepoints[j]=9;
+                else if(ujwal.marks[j]>=70.0)
+                    ujwal.gradepoints[j]=8;
+                else if(ujwal.marks[j]>=60.0)
+                    ujwal.gradepoints[j]=7;
+                else if(ujwal.marks[j]>=50.0)
+                    ujwal.gradepoints[j]=6;
+                else if(ujwal.marks[j]>=40.0)
+                    ujwal.gradepoints[j]=4;
+                else
+                    ujwal.gradepoints[j]=0;
+            }
+
+
+            ujwal.calculator();
+            ujwal.getDetails();
+        }
+    }
+     
+     
