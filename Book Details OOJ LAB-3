@@ -1,0 +1,86 @@
+//program to create a class
+
+import java.util.*;
+
+class Book
+{
+  String name;
+  String author;
+  float price;
+  int num_pages;
+
+ 
+ 
+  void display()
+  {
+    System.out.println("");
+    System.out.println("BOOK NAME: "+name);
+    System.out.println("AUTHOR NAME: "+author);
+    System.out.println("PRICE OF THE BOOK: "+price);
+    System.out.println("NUMBER OF PAGES IN THE BOOK: "+num_pages);
+    System.out.println("");
+  }
+
+  void getDetails(String n, String auth,float p,int np)
+  {
+    name = n;
+    author = auth;
+    price = p;
+    num_pages = np;
+  }
+ 
+  void setDetails(String n, String auth,float p,int np)
+  {
+    name = n;
+    author = auth;
+    price = p;
+    num_pages = np;
+  }
+}
+
+public class BookDetails
+{
+  public static void main(String [] args)
+  {
+    Scanner sc = new Scanner(System.in);
+    
+    System.out.println("Enter the number of books you want to operate on");
+    int num = sc.nextInt();
+
+    Book [] b = new Book[num];
+
+   for(int i = 0;i<num;i++)
+   {
+     b[i] = new Book(); //allocating space for each object using new operator
+   }
+
+    String na,autho;
+    float pr;
+    int nps;
+  
+    for(int i = 0;i<num;i++)
+    {
+      sc.nextLine();
+      System.out.println("ENTER THE NAME OF THE BOOK");
+      na = sc.nextLine();
+
+      System.out.println("ENTER NAME OF AUTHOR");
+      autho = sc.nextLine();
+  
+      System.out.println("ENTER THE PRICE OF THE BOOK");
+      pr = sc.nextFloat();
+    
+      System.out.println("ENTER THE NUMBER OF PAGES");
+      nps = sc.nextInt();
+
+      b[i].setDetails(na,autho,pr,nps);
+    }
+
+    for(int i=0;i<num;i++)
+    {
+       System.out.println("THE DETAILS OF THE BOOK "+b[i].name+" ARE:");
+       b[i].display();
+    }
+  }
+}
+      
