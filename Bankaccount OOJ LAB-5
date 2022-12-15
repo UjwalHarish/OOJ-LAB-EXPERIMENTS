@@ -1,0 +1,154 @@
+import java.util.*;
+
+class Account
+{
+  String name;
+  String accno;
+  String type;
+
+  Account(String name,String accno,String type)
+  {
+    this.name=name;
+    this.accno=accno;
+    this.type=type;
+  }
+}
+
+  
+class CurrAccount extends Account
+{
+  double balance;
+  double withdrawal;
+  int pen=0;
+
+  CurrAccount(String name,String accno,String type,double balance)
+  {
+    this.balance=balance;
+    super(name,accno,type);
+    if(balance<2000.0)
+    {
+      System.out.println("Insufficient Balance");
+      pen=pen+3000;
+    }
+  }
+
+  void updateDeposit(double deposit)
+  {
+    balance=balance+deposit;
+    if(pen!=0 && balance>3000.0)
+    {
+      balance=balance-pen;
+    }
+  }
+
+  void updateWithdrawal(double withdrawal)
+  {
+    if(balance<2000.0 && (balance-withdrawal)<2000.0)
+    {
+       System.out.println("Insufficient Funds");
+    }
+    else
+      balance=balance-withdrawal;
+  }
+
+  void displayBalance()
+  {
+    System.out.println("Your Balance is "+balance);
+  }
+}
+  
+
+}
+
+class SavAccount extends Account
+{
+  double balance;
+  double deposit;
+  double withdrawal;
+  double intamt;
+
+  SavAccount(String name,String accno,String type,double balance)
+  {
+    super(name,accno,type);
+    this.balance=balance;
+  }
+  
+  void newDeposit(double deposit)
+  {
+    this.deposit=deposit;
+    balance=balance+deposit;
+  }
+
+  void newWithdrawal(double withdrawal)
+  {
+    this.withdrawal=withdrawal;
+    if((balance-withdrawal)<0)
+      System.out.println("Insufficient Funds");
+    else
+      balance=balance-withdrawal;
+  }
+
+  void interest(double p,double r,double t,double n)
+  {
+    intamt=p*(Math.pow((1+r/n),nt);
+    System.out.println("Your interest amount is "+intamt);
+  }
+
+  void displayBalance()
+  {
+    System.out.println("Your Balance is "+balance);
+  }
+}   
+
+public class Bank
+{
+  public static void main(String [] args)
+  {
+    Scanner sc = new Scanner(System.in);
+    Account a = new Account();
+    CurrAccount ca = new CurrAccount();
+
+    System.out.println("Enter account type:\n1.Savings Account(S)\2.Current Account(C)");
+    String type=sc.next();
+
+    double rate=6.7;
+
+    if(type.equals("S"))
+    {
+      System.out.println("Enter name,account number and balance");
+      String name = sc.nextLine();
+      String accno = sc.next();
+      double balance = sc.nextDouble();
+      SavAccount sa = new SavAccount(name,accno,Savings Account);
+     
+      System.out.println("1.Deposit\n2.Withdraw\n3.Apply for interest\n4.Check Balance");
+      System.out.println("Enter your choice");
+      int choice=sc.nextInt();
+      switch(choice)
+      {
+        case 1:System.out.println("Enter the deposit");
+               double deposit = sc.nextDouble();
+               sa.newDeposit(deposit);
+               break;
+        case 2:System.out.println("Enter withdrawal amount");
+               double withdraw = sc.nextDouble();
+               sa.newWithdraw(withdraw);
+               break;
+        case 3:System.out.println("Enter the time period,interest amount, number of times you want to apply for interest,principle amount");
+               double prin=sc.nextDouble();
+               double time=sc.nextDouble();
+               double amt=sc.nextDouble();
+               int n=sc.nextInt();
+               sa.interest(prin,rate,time,n);
+               break;
+        case 4:
+               
+
+               
+
+      
+
+    
+    
+
+    
