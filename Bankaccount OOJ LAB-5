@@ -1,16 +1,30 @@
 import java.util.*;
+import java.lang.*;
 
 class Account
 {
   String name;
   String accno;
   String type;
+  
+  Account()
+  {
+      int a=10;
+  }
 
   Account(String name,String accno,String type)
   {
     this.name=name;
     this.accno=accno;
     this.type=type;
+  }
+  void displayDetails()
+  {
+      System.out.println("**********WELCOME**********");
+      System.out.println("Name:           "+this.name);
+      System.out.println("Account Number: "+this.accno);
+      System.out.println("Account Type:   "+this.type);
+      
   }
 }
 
@@ -23,39 +37,38 @@ class CurrAccount extends Account
 
   CurrAccount(String name,String accno,String type,double balance)
   {
-    this.balance=balance;
     super(name,accno,type);
-    if(balance<2000.0)
+    this.balance=balance;
+    if(this.balance<2000.0)
     {
-      System.out.println("Insufficient Balance");
+      System.out.println("Insufficient Balance.Please maintain a minimum");
       pen=pen+3000;
     }
   }
 
-  void updateDeposit(double deposit)
+  void newDeposit(double deposit)
   {
-    balance=balance+deposit;
-    if(pen!=0 && balance>3000.0)
+    this.balance=balance+deposit;
+    if(pen!=0 && balance>2000.0)
     {
-      balance=balance-pen;
+      this.balance=this.balance-pen;
     }
   }
 
-  void updateWithdrawal(double withdrawal)
+  void newWithdraw(double withdrawal)
   {
-    if(balance<2000.0 && (balance-withdrawal)<2000.0)
+    if(this.balance<2000.0 || (this.balance-withdrawal)<2000.0)
     {
        System.out.println("Insufficient Funds");
     }
     else
-      balance=balance-withdrawal;
+      this.balance=this.balance-withdrawal;
   }
 
   void displayBalance()
   {
-    System.out.println("Your Balance is "+balance);
+    System.out.println("Your Balance is "+this.balance);
   }
-}
   
 
 }
@@ -79,7 +92,7 @@ class SavAccount extends Account
     balance=balance+deposit;
   }
 
-  void newWithdrawal(double withdrawal)
+  void newWithdraw(double withdrawal)
   {
     this.withdrawal=withdrawal;
     if((balance-withdrawal)<0)
@@ -90,7 +103,7 @@ class SavAccount extends Account
 
   void interest(double p,double r,double t,double n)
   {
-    intamt=p*(Math.pow((1+r/n),nt);
+    intamt=p*(Math.pow((1+r/n),(n*t)));
     System.out.println("Your interest amount is "+intamt);
   }
 
@@ -100,30 +113,34 @@ class SavAccount extends Account
   }
 }   
 
-public class Bank
+public class Main
 {
   public static void main(String [] args)
   {
     Scanner sc = new Scanner(System.in);
-    Account a = new Account();
-    CurrAccount ca = new CurrAccount();
-
-    System.out.println("Enter account type:\n1.Savings Account(S)\2.Current Account(C)");
-    String type=sc.next();
+    int choice=0;
+    String type;
+    do{
+    System.out.println("Enter account type:\n1.Savings Account(S)\n2.Current Account(C)");
+    type=sc.next();
 
     double rate=6.7;
 
-    if(type.equals("S"))
+    if(type.equalsIgnoreCase("S"))
     {
       System.out.println("Enter name,account number and balance");
+      sc.nextLine();
       String name = sc.nextLine();
       String accno = sc.next();
       double balance = sc.nextDouble();
-      SavAccount sa = new SavAccount(name,accno,Savings Account);
-     
-      System.out.println("1.Deposit\n2.Withdraw\n3.Apply for interest\n4.Check Balance");
+      Account a = new Account(name,accno,"Savings Account");
+      SavAccount sa = new SavAccount(name,accno,"Savings Account",balance);
+      a.displayDetails();
+      System.out.println("");
+      do{
+      System.out.println("1.Deposit\n2.Withdraw\n3.Apply for interest\n4.Check Balance\n5.EXIT");
       System.out.println("Enter your choice");
-      int choice=sc.nextInt();
+      choice=sc.nextInt();
       switch(choice)
       {
         case 1:System.out.println("Enter the deposit");
@@ -134,21 +151,52 @@ public class Bank
                double withdraw = sc.nextDouble();
                sa.newWithdraw(withdraw);
                break;
-        case 3:System.out.println("Enter the time period,interest amount, number of times you want to apply for interest,principle amount");
+        case 3:System.out.println("Enter the principle amount,time period, number of times you want to apply for interest");
                double prin=sc.nextDouble();
                double time=sc.nextDouble();
-               double amt=sc.nextDouble();
-               int n=sc.nextInt();
+               double n=sc.nextDouble();
                sa.interest(prin,rate,time,n);
                break;
-        case 4:
-               
-
-               
-
+        case 4:sa.displayBalance();
+               break;
+      }
+      }while(choice!=5);}
       
-
+    else if(type.equalsIgnoreCase("C"))
+    {
+      System.out.println("Enter name,account number and balance");
+      sc.nextLine();
+      String name = sc.nextLine();
+      String accno = sc.next();
+      double balance = sc.nextDouble();
+      Account a = new Account(name,accno,"Current Account");
+      CurrAccount ca = new CurrAccount(name,accno,"Current Account",balance);
+      a.displayDetails();
+      System.out.println("");
+      do{
+      System.out.println("1.Deposit\n2.Withdraw\n3.Check Balance\n4.EXIT");
+      System.out.println("Enter your choice");
+      choice=sc.nextInt();
+      switch(choice)
+      {
+        case 1:System.out.println("Enter the deposit");
+               double deposit = sc.nextDouble();
+               ca.newDeposit(deposit);
+               break;
+        case 2:System.out.println("Enter withdrawal amount");
+               double withdraw = sc.nextDouble();
+               ca.newWithdraw(withdraw);
+               break;
+        case 3:ca.displayBalance();
+               break;
+      }
+      }while(choice!=4);}
+      
+      else
+        System.out.println("Your Choice does not exist");
     
-    
-
-    
+    System.out.println("Do you want to continue?\n1.YES(Y)\n2.NO(N)");
+    type = sc.next();
+  }while(type.equalsIgnoreCase("Y"));
+  }
+}
